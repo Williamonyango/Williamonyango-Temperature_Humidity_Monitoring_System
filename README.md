@@ -97,12 +97,32 @@ Temperature: 25.3 °C, Humidity: 60.1 %
 
 The main logic:
 
-const unsigned long READ_INTERVAL = 60000; // 1 minute
-unsigned long lastReadTime = 0;
+void setup() {
+Serial.begin(115200);
+delay(1000);
+
+Serial.println("Starting ESP32 DHT Sensor...");
+dht.begin();
+
+delay(2000);
+
+float hum = dht.readHumidity();
+float temp = dht.readTemperature();
+if (!isnan(hum) && !isnan(temp)) {
+Serial.print("Temperature: ");
+Serial.print(temp, 1);
+Serial.print(" °C, Humidity: ");
+Serial.print(hum, 1);
+Serial.println(" %");
+} else {
+Serial.println("Initial read failed (will try later).");
+}
+
+lastReadTime = millis();
+}
 
 void loop() {
 unsigned long currentTime = millis();
-
 if (currentTime - lastReadTime >= READ_INTERVAL) {
 float humidity = dht.readHumidity();
 float temperature = dht.readTemperature();
@@ -112,13 +132,11 @@ float temperature = dht.readTemperature();
     } else {
       Serial.print("Temperature: ");
       Serial.print(temperature, 1);
-      Serial.write(176); // degree symbol (°)
-      Serial.print("C, Humidity: ");
+      Serial.print(" °C, Humidity: ");
       Serial.print(humidity, 1);
       Serial.println(" %");
     }
-
-    lastReadTime = currentTime; // reset timer
+    lastReadTime = currentTime;
 
 }
 }
@@ -128,8 +146,6 @@ Key Concepts:
 millis() → keeps track of time since boot (in ms), allows non-blocking delays.
 
 isnan() → checks if the sensor gave a valid number.
-
-Serial.write(176) → prints the degree (°) symbol.
 
 **_ Common Issues & Fixes _**
 
