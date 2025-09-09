@@ -1,6 +1,6 @@
 **_ ESP32 TEMPERATURE & HUMIDITY MONITORING SYSTEM _**
 
-This project shows how to use an ESP32-WROOM development board with a DHT11 / DHT22 sensor to measure temperature and humidity.
+This project shows how to use an ESP32-WROOM development board with a DHT22 sensor to measure temperature and humidity.
 The results are printed on the Serial Monitor every 60 seconds.
 
 It is designed to be simple and beginner-friendly, using the Arduino framework on PlatformIO.
@@ -15,13 +15,13 @@ Uses millis() instead of delay() → allows adding other tasks later without blo
 
 Error handling: if the sensor fails to read, it prints "Failed to read from DHT sensor!"
 
-Works with both DHT11 and DHT22 sensors (just change one line in the code)
+Works with  DHT22 sensor. Even though DHT11 and DHT22 can measure the humidity and temperature, DHT22 is preffered since it has more accuracy, wide range of temp -40-80C and wide range of Hum 0-100%. It also has a longer life span than the DHT11.
 
 **_ Hardware Requirements _**
 
 ESP32 DevKit V1 (ESP32-WROOM board)
 
-DHT11 or DHT22 temperature & humidity sensor
+DHT22 temperature & humidity sensor
 
 Jumper wires
 
@@ -39,14 +39,14 @@ GND → GND (ESP32)
 
 DATA → GPIO 4 (ESP32)
 
-**NB** If your sensor is a bare DHT11/DHT22 without a breakout board, you must add a 10kΩ resistor between DATA and VCC (pull-up resistor).
+**NB** If your sensor is a bare DHT22 without a breakout board, you must add a 10kΩ resistor between DATA and VCC (pull-up resistor).
 
 **_ Project Structure (PlatformIO) _**
 Temperature_Humidity_Monitoring_System/
 │── src/
-│ └── main.cpp # Your main code file
+│ └── main.cpp # main code
 │── platformio.ini # PlatformIO configuration
-│── lib/ # (optional) extra libraries
+│── lib/  extra libraries
 │── README.md # Project documentation
 
 **_ Software Requirements _**
@@ -61,8 +61,8 @@ DHT sensor library (PlatformIO auto-installs when you compile)
 **_ Setup Instructions _**
 
 1 Clone the Repository
-git clone https://github.com/<username>/ESP32-DHT-Monitor.git
-cd ESP32-DHT-Monitor
+git clone https://github.com/Williamonyango/Williamonyango-Temperature_Humidity_Monitoring_System.git
+cd Temperature_Humidity_Monitoring_System.
 
 2 Open in VSCode + PlatformIO
 
@@ -81,12 +81,14 @@ Select the correct port (/dev/ttyUSB0 on Linux, COMx on Windows)
 Run:
 
 pio run --target upload
+or use the upload icon on the bottom left of the platformIO.
 
 5 Open Serial Monitor
 
 Run:
 
 pio device monitor -b 115200
+or use the serial monitor icon on the botton left of PlatformIO.
 
 You should see something like:
 
